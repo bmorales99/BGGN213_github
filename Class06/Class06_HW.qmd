@@ -1,0 +1,84 @@
+---
+title: "HW06"
+author: "Bobbie Morales (A15443382)"
+format: pdf
+---
+
+# Code to improve (A)
+
+df <- data.frame(a=1:10, b=seq(200,400,length=10),c=11:20,d=NA)
+df$a <- (df$a - min(df$a)) / (max(df$a) - min(df$a))
+df$b <- (df$b - min(df$b)) / (max(df$b) - min(df$b))
+df$c <- (df$c - min(df$c)) / (max(df$c) - min(df$c))
+df$d <- (df$d - min(df$d)) / (max(df$a) - min(df$d))
+
+# Create dataframe
+```{r}
+df <- data.frame(a=1:10, b=seq(200,400,length=10),c=11:20,d=NA)
+```
+
+# create function to normalize values in columm a to range btw 0-1 (make different variables comparable)
+
+```{r}
+normalize_formula <- function (x) {
+  (x - min(x))/(max(x) - min(x))
+  }
+```
+
+# Apply function only to numeric columns
+
+```{r}
+sapply(df[, sapply(df, is.numeric)], normalize_formula) 
+```
+
+
+# Code to improve (B)
+
+library(bio3d)
+s1 <- read.pdb("4AKE") # kinase with drug
+s2 <- read.pdb("1AKE") # kinase no drug
+s3 <- read.pdb("1E4Y") # kinase with drug
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s2.chainA <- trim.pdb(s2, chain="A", elety="CA")
+s3.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s1.b <- s1.chainA$atom$b
+s2.b <- s2.chainA$atom$b
+s3.b <- s3.chainA$atom$b
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+plotb3(s2.b, sse=s2.chainA, typ="l", ylab="Bfactor")
+plotb3(s3.b, sse=s3.chainA, typ="l", ylab="Bfactor")
+
+# Create list to store kinases and function to read Protein Data Bank (PDB)
+
+```{r}
+library(bio3d)
+kinase_list <-c("4AKE","1AKE","1E4Y")
+structure_list <- lapply(kinase_list, read.pdb)
+```
+
+# Use trim function to create new, smaller PDB chain from kinases
+
+```{r}
+trim_pdb_function <- function(x) trim.pdb(x, chain="A", elety="CA")
+trimmed_chains <- lapply(structure_list, trim_pdb_function)
+```
+
+# Extract B-factor values from atom data of trimmed chain
+
+```{r}
+extract_function <- function(x) {
+  x$atom$b
+}
+b_factor_values <- lapply(trimmed_chains, extract_function)
+```
+
+# Plot B-factors vs Trimmed Chains
+```{r}
+plot_bfactors_values <- function(b_factors_values, trimmed_chains) {
+  for (i in seq_along(b_factors_values)) {
+    plotb3(b_factors_values[[i]], sse=trimmed_chains[[i]], typ="l", ylab="Bfactor")
+  }
+}
+plot_bfactors_values(b_factor_values, trimmed_chains) 
+```
+
