@@ -1,7 +1,8 @@
 ---
 title: "Class09"
 author: "Bobbie Morales A15443382"
-format: pdf
+format: html
+prefer-html: true
 ---
 
 ## The PDB database 
