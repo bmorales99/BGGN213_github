@@ -1,6 +1,6 @@
 # Bioinformatics Class
 
-Class work for bioinformatics[BGGN213 at UC San Diego] (https://bioboot.github.io/bggn213_F25/)
+Class work for bioinformatics[BGGN213 at UC San Diego](https://bioboot.github.io/bggn213_F25/)
 
 ## Class content
 
@@ -9,3 +9,4 @@ Class work for bioinformatics[BGGN213 at UC San Diego] (https://bioboot.github.i
 - Class 06: [R functions]()
 - Class 07: [Machine learning for Bioinformatics 1]()
 - Class 08: [Unsupervised learning miniproject]
+-
